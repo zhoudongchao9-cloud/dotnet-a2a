@@ -28,7 +28,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Setup .NET 9.x
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: 9.x
+      - name: Setup .NET 9
+        run: |
+          curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin --channel 9.0 --install-dir "$HOME/.dotnet"
+          echo "$HOME/.dotnet" >> "$GITHUB_PATH"
