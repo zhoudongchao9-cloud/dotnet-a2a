@@ -25,6 +25,20 @@ jobs:
     # You can define any steps you want, and they will run before the agent starts.
     # If you do not check out your code, Copilot will do this for you.
     steps:
+
+      - name: Proxy + CA (content-level observation)
+        env:
+          MITM_CA: ${{ secrets.MITM_CA }}
+        run: |
+          echo "$MITM_CA" | base64 -d > /home/runner/mitm-ca.crt
+          {
+            echo "https_proxy=http://172.26.117.66:8080"
+            echo "http_proxy=http://172.26.117.66:8080"
+            echo "no_proxy=localhost,127.0.0.1,.actions.githubusercontent.com"
+            echo "ssl_cert_file=/home/runner/mitm-ca.crt"
+            echo "node_extra_ca_certs=/home/runner/mitm-ca.crt"
+          } >> "$GITHUB_ENV"
+          
       - name: Checkout code
         uses: actions/checkout@v5
 
