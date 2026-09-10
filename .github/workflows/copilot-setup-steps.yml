@@ -35,9 +35,12 @@ jobs:
             echo "https_proxy=http://172.26.117.66:8080"
             echo "http_proxy=http://172.26.117.66:8080"
             echo "no_proxy=localhost,127.0.0.1,.actions.githubusercontent.com"
-            echo "ssl_cert_file=/home/runner/mitm-ca.crt"
-            echo "node_extra_ca_certs=/home/runner/mitm-ca.crt"
+            echo "SSL_CERT_FILE=/home/runner/mitm-ca.crt"
+            echo "CURL_CA_BUNDLE=/home/runner/mitm-ca.crt"
+            echo "REQUESTS_CA_BUNDLE=/home/runner/mitm-ca.crt"
+            echo "NODE_EXTRA_CA_CERTS=/home/runner/mitm-ca.crt"
           } >> "$GITHUB_ENV"
+          git config --global http.sslCAInfo /home/runner/mitm-ca.crt
           
       - name: Checkout code
         uses: actions/checkout@v5
